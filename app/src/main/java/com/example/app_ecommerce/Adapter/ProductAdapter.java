@@ -39,7 +39,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         holder.txt_title.setText(productModel.getProduct_name());
         holder.txt_stock.setText(String.valueOf(productModel.getStock_quantity()));
         holder.txt_price.setText(String.format("$%.2f", productModel.getPrice()));
-        Picasso.get().load(productList.get(position).getImage()).into(holder.item_image);
+        // Lấy ảnh từ drawable bằng resource ID
+        int imageResourceId = context.getResources().getIdentifier(productModel.getImage(), "drawable", context.getPackageName());
+        holder.item_image.setImageResource(imageResourceId);
+
+        // lấy ảnh từ internet
+        //Picasso.get().load(productList.get(position).getImage()).into(holder.item_image);
     }
 
     @Override
