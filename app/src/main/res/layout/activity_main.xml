@@ -405,7 +405,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imageView5"
+                        android:id="@+id/imageExplorer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -414,7 +414,7 @@
                         app:srcCompat="@drawable/btn_1" />
 
                     <TextView
-                        android:id="@+id/textView10"
+                        android:id="@+id/textExplorer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
@@ -432,7 +432,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imageView5"
+                        android:id="@+id/imageWishlist"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -441,7 +441,7 @@
                         app:srcCompat="@drawable/btn_2" />
 
                     <TextView
-                        android:id="@+id/textView10"
+                        android:id="@+id/textWishlist"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
@@ -459,7 +459,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imageView5"
+                        android:id="@+id/imageCart"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -468,7 +468,7 @@
                         app:srcCompat="@drawable/btn_3" />
 
                     <TextView
-                        android:id="@+id/textView10"
+                        android:id="@+id/textCart"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
@@ -486,7 +486,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imageView5"
+                        android:id="@+id/imageProfile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -495,7 +495,7 @@
                         app:srcCompat="@drawable/btn_4" />
 
                     <TextView
-                        android:id="@+id/textView10"
+                        android:id="@+id/textProfile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
