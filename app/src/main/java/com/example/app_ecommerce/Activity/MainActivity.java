@@ -13,6 +13,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_ecommerce.Adapter.ProductAdapter;
@@ -79,9 +80,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void Anhxa() {
         rvPopularProducts = findViewById(R.id.rvPopularProducts);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
+        // Sử dụng LinearLayoutManager cho trượt ngang
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rvPopularProducts.setLayoutManager(layoutManager);
         rvPopularProducts.setHasFixedSize(true);
+
         //khoi tao list
         productList = new ArrayList<>();
        //

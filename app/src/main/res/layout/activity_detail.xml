@@ -65,15 +65,13 @@
 
                 <ImageView
                     android:id="@+id/foodPic"
-                    android:layout_width="314dp"
-                    android:layout_height="253dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="270dp"
                     android:layout_margin="16dp"
                     app:layout_constraintBottom_toBottomOf="@+id/view"
                     app:layout_constraintEnd_toEndOf="@+id/view"
-                    app:layout_constraintHorizontal_bias="0.504"
                     app:layout_constraintStart_toStartOf="@+id/view"
                     app:layout_constraintTop_toTopOf="@+id/view"
-                    app:layout_constraintVertical_bias="0.525"
                     tools:src="@drawable/pic1" />
 
                 <LinearLayout

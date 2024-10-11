@@ -16,7 +16,8 @@
             android:id="@+id/linearLayoutMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="70dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/headerLayout"
@@ -310,41 +311,6 @@
                         android:textColor="@color/black" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/categoryViewAll"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.2"
-                    android:orientation="vertical">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="55dp"
-                        android:layout_height="55dp"
-                        android:layout_gravity="center"
-                        android:background="@drawable/btn_cat_background">
-
-                        <ImageView
-                            android:id="@+id/imageView4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/cat5" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <TextView
-                        android:id="@+id/textView8"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="ViewAll"
-                        android:textAlignment="center"
-                        android:textColor="@color/black" />
-                </LinearLayout>
-
             </LinearLayout>
 
             <LinearLayout
@@ -377,6 +343,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="16dp"
+                android:clipToPadding="false"
                 android:paddingEnd="16dp" />
         </LinearLayout>
     </ScrollView>
@@ -419,7 +386,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:layout_weight="1"
                         android:text="Explorer"
                         android:textAlignment="center"
                         android:textColor="@color/red" />
@@ -446,7 +412,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:layout_weight="1"
                         android:text="WishList"
                         android:textAlignment="center"
                         android:textColor="#959595" />
@@ -473,7 +438,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:layout_weight="1"
                         android:text="Cart"
                         android:textAlignment="center"
                         android:textColor="#959595" />
@@ -500,7 +464,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:layout_weight="1"
                         android:text="Profile"
                         android:textAlignment="center"
                         android:textColor="#959595" />
