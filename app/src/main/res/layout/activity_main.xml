@@ -375,7 +375,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvPopularProducts"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp" />
         </LinearLayout>
@@ -383,15 +383,16 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="parent">
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="match_parent"
             android:layout_gravity="bottom">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
