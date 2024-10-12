@@ -1,24 +1,24 @@
 package com.example.app_ecommerce.Activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_ecommerce.Adapter.ProductAdapter;
 import com.example.app_ecommerce.Model.ProductModel;
-import com.example.app_ecommerce.Model.getProductModel;
 import com.example.app_ecommerce.R;
 import com.example.app_ecommerce.Retrofit.ApiEcommerce;
 import com.example.app_ecommerce.Retrofit.RetrofitClient;
@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView rvPopularProducts;
     private CompositeDisposable compositeDisposable;
     private ApiEcommerce apiEcommerce;
+    private ConstraintLayout categoryPC, categoryPhone, categoryHeadPhone, categoryGaming;
+    private TextView seeAll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (isConnected(this)){
             getProducts();
+            getEventClick();
         } else {
             Toast.makeText(getApplicationContext(), "Không có Internet, vui lòng kết nối!", Toast.LENGTH_LONG).show();
         }
@@ -79,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void Anhxa() {
-        rvPopularProducts = findViewById(R.id.rvPopularProducts);
+        rvPopularProducts = findViewById(R.id.rvAllProducts);
         // Sử dụng LinearLayoutManager cho trượt ngang
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rvPopularProducts.setLayoutManager(layoutManager);
@@ -87,10 +90,48 @@ public class MainActivity extends AppCompatActivity {
 
         //khoi tao list
         productList = new ArrayList<>();
-       //
         compositeDisposable = new CompositeDisposable();
+
+        //khoi tao category
+        categoryPC = findViewById(R.id.categoryPC);
+        categoryPhone = findViewById(R.id.categoryPhone);
+        categoryHeadPhone = findViewById(R.id.categoryHeadPhone);
+        categoryGaming = findViewById(R.id.categoryGaming);
+        seeAll = findViewById(R.id.tvSeeAll);
     }
 
+    private void getEventClick() {
+        categoryPC. setOnClickListener(v -> {
+            openCategoryActivity("PC");
+        });
+
+        // Xử lý click cho category Phone
+        categoryPhone.setOnClickListener(v -> {
+            openCategoryActivity("Phone");
+        });
+
+        // Xử lý click cho category HeadPhone
+        categoryHeadPhone.setOnClickListener(v -> {
+            openCategoryActivity("HeadPhone");
+        });
+
+        // Xử lý click cho category Gaming
+        categoryGaming.setOnClickListener(v -> {
+            openCategoryActivity("Gaming");
+        });
+
+        // Xử lý click cho "See All"
+        seeAll.setOnClickListener(v -> {
+            openCategoryActivity("All");
+        });
+    }
+
+    // Mở categoryActivity với tham số category
+    private void openCategoryActivity(String category){
+        Intent intent = new Intent(MainActivity.this, CategoryActivity.class);
+        intent.putExtra("category", category);
+        startActivity(intent);
+    }
     // kiem tra thiet bị co kết nối với internet hay không để lay du lieu tu db
     private boolean isConnected (Context context){
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
