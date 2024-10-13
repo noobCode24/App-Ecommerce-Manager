@@ -1,8 +1,10 @@
 package com.example.app_ecommerce.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -35,10 +37,8 @@ public class CategoryActivity extends AppCompatActivity {
     private List<ProductModel> productList;
     private CategoryAdapter categoryAdapter;
     private ImageView btnBack;
-    private int currentPage = 1;
-    private int totalItems = 0; // Tổng số sản phẩm đã tải
-    private static final int ITEMS_PER_PAGE = 6; // Số sản phẩm trên mỗi trang
-
+    private TextView tvNotificationCountShopping;
+    private ImageView ivShopping;
 
 
     @Override
@@ -56,7 +56,28 @@ public class CategoryActivity extends AppCompatActivity {
         Anhxa();
         getData();
         ActionBack();
+        updateCartCount();
+        initControl();
     }
+
+    private void initControl() {
+        ivShopping.setOnClickListener(v -> {
+            Intent intent = new Intent(CategoryActivity.this, CartActivity.class);
+            startActivity(intent);
+        });
+    }
+
+    private void updateCartCount() {
+        int productCount = Utils.ShoppingCartList.size(); // Đếm số sản phẩm khác nhau trong giỏ hàng
+        tvNotificationCountShopping.setText(String.valueOf(productCount));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateCartCount(); // Cập nhật số lượng giỏ hàng
+    }
+
 
     private void ActionBack() {
         btnBack = findViewById(R.id.btnBack);
@@ -130,6 +151,8 @@ public class CategoryActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
         rvAllProducts.setLayoutManager(layoutManager);
         rvAllProducts.setHasFixedSize(true);
+        ivShopping = findViewById(R.id.ivShopping);
+        tvNotificationCountShopping = findViewById(R.id.tvNotificationCountShopping);
     }
 
     @Override

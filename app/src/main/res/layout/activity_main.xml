@@ -144,7 +144,7 @@
                     android:layout_height="30dp"
                     android:background="@drawable/orange_button"
                     android:gravity="center"
-                    android:text="But now"
+                    android:text="Buy now"
                     android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="@+id/bannerLayout"
                     app:layout_constraintEnd_toEndOf="@+id/bannerLayout"

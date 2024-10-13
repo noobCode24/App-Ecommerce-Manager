@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private ApiEcommerce apiEcommerce;
     private ConstraintLayout categoryPC, categoryPhone, categoryHeadPhone, categoryGaming;
     private TextView seeAll;
+    private LinearLayout layoutCart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +56,20 @@ public class MainActivity extends AppCompatActivity {
 
         apiEcommerce = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiEcommerce.class);
         Anhxa();
-
         if (isConnected(this)){
             getProducts();
             getEventClick();
+            initControl();
         } else {
             Toast.makeText(getApplicationContext(), "Không có Internet, vui lòng kết nối!", Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void initControl() {
+        layoutCart.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), CartActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void getProducts() {
@@ -98,6 +107,9 @@ public class MainActivity extends AppCompatActivity {
         categoryHeadPhone = findViewById(R.id.categoryHeadPhone);
         categoryGaming = findViewById(R.id.categoryGaming);
         seeAll = findViewById(R.id.tvSeeAll);
+
+        //Khoi tao Linearlayout
+        layoutCart = findViewById(R.id.layoutCart);
 
         //Danh sách toàn cục
         if (Utils.ShoppingCartList == null){

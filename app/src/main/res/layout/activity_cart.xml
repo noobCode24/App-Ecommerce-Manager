@@ -7,22 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".Activity.CartActivity">
 
-    <TextView
-        android:id="@+id/emptyTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Your Cart is Empty"
-        tools:layout_editor_absoluteX="139dp"
-        tools:layout_editor_absoluteY="419dp" />
-
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:paddingBottom="50dp"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,13 +22,13 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/backBtn"
-                    android:layout_width="23dp"
-                    android:layout_height="23dp"
+                    android:id="@+id/btnBack"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:padding="2dp"
                     app:srcCompat="@drawable/arrow" />
 
@@ -57,6 +47,7 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewCart"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -109,31 +100,34 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
                 <TextView
-                    android:id="@+id/totalFeeTxt"
+                    android:id="@+id/txt_subtotal"
                     style="@style/textStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$-"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView9"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/textView9" />
 
                 <TextView
-                    android:id="@+id/deliveryTxt"
+                    android:id="@+id/txt_delivery"
                     style="@style/textStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$-"
-                    app:layout_constraintEnd_toEndOf="@+id/totalFeeTxt"
-                    app:layout_constraintTop_toBottomOf="@+id/totalFeeTxt" />
+                    app:layout_constraintBottom_toBottomOf="@+id/textView11"
+                    app:layout_constraintEnd_toEndOf="@+id/txt_subtotal"
+                    app:layout_constraintTop_toTopOf="@+id/textView11" />
 
                 <TextView
-                    android:id="@+id/taxTxt"
+                    android:id="@+id/txt_tax"
                     style="@style/textStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$-"
-                    app:layout_constraintEnd_toEndOf="@+id/deliveryTxt"
-                    app:layout_constraintTop_toBottomOf="@+id/deliveryTxt" />
+                    app:layout_constraintBottom_toBottomOf="@+id/textView12"
+                    app:layout_constraintEnd_toEndOf="@+id/txt_delivery"
+                    app:layout_constraintTop_toTopOf="@+id/textView12" />
 
                 <View
                     android:id="@+id/view3"
@@ -157,7 +151,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/view3" />
 
                 <TextView
-                    android:id="@+id/totalTxt"
+                    android:id="@+id/txt_total"
                     style="@style/textStyleBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -271,7 +265,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/button2"
+                android:id="@+id/btnOrder"
                 style="@android:style/Widget.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
