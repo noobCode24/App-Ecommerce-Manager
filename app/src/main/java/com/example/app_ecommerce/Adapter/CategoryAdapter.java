@@ -1,6 +1,7 @@
 package com.example.app_ecommerce.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.app_ecommerce.Activity.DetailActivity;
+import com.example.app_ecommerce.Interface.ItemClickListener;
 import com.example.app_ecommerce.Model.ProductModel;
 import com.example.app_ecommerce.R;
 
@@ -49,6 +52,18 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
 
         // lấy ảnh từ internet
         //Picasso.get().load(productList.get(position).getImage()).into(holder.item_image);
+
+        holder.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onClick(View view, int pos, boolean isLongclick) {
+                if (!isLongclick) {
+                    // click
+                    Intent intent = new Intent(context, DetailActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override
@@ -56,9 +71,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         return productList.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView txt_title, txt_price, txt_stock;
         ImageView item_image;
+
+        private ItemClickListener itemClickListener;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,6 +83,16 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
             txt_price = itemView.findViewById(R.id.txt_price);
             txt_stock = itemView.findViewById(R.id.txtStock);
             item_image = itemView.findViewById(R.id.item_image);
+            itemView.setOnClickListener(this);
+        }
+
+        public void setItemClickListener(ItemClickListener itemClickListener) {
+            this.itemClickListener = itemClickListener;
+        }
+
+        @Override
+        public void onClick(View v) {
+            itemClickListener.onClick(v, getAdapterPosition(), false);
         }
     }
 }
