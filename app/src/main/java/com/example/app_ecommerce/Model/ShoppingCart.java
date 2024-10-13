@@ -4,8 +4,17 @@ public class ShoppingCart {
     private int product_id;
     private String product_name;
     private double price;
+    private double originalPrice;
     private int quantity;
     private String image;
+
+    public double getOriginalPrice() {
+        return originalPrice;
+    }
+
+    public void setOriginalPrice(double originalPrice) {
+        this.originalPrice = originalPrice;
+    }
 
     public ShoppingCart() {
     }

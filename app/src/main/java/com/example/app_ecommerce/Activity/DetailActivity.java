@@ -1,5 +1,6 @@
 package com.example.app_ecommerce.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,9 +25,9 @@ import com.squareup.picasso.Picasso;
 import java.text.DecimalFormat;
 
 public class DetailActivity extends AppCompatActivity {
-    TextView txt_title, txt_price, txt_desc, txt_rate, txt_soldquantity, txt_priceDialog, txt_stockquantity, minusCartBtn, plusCartBtn, numberItemTxt, tvNotificationCountShopping;
-    ImageView img_pic, btnAddCart, btnBack, btn_exit, img_dialog, ivShopping;
-    Button btnBuyNow, btn_add_to_cart;
+    private TextView txt_title, txt_price, txt_desc, txt_rate, txt_soldquantity, txt_priceDialog, txt_stockquantity, minusCartBtn, plusCartBtn, numberItemTxt, tvNotificationCountShopping;
+    private ImageView img_pic, btnAddCart, btnBack, btn_exit, img_dialog, ivShoppingDetail;
+    private Button btnBuyNow, btn_add_to_cart;
 
     ProductModel productModel;
 
@@ -47,6 +48,11 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void initControl() {
+        ivShoppingDetail.setOnClickListener(v -> {
+            Intent intent = new Intent(DetailActivity.this, CartActivity.class);
+            startActivity(intent);
+        });
+
         btnAddCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,14 +71,20 @@ public class DetailActivity extends AppCompatActivity {
 
                 txt_stockquantity.setText("kho: " + productModel.getStock_quantity());
 
-                DecimalFormat decimalFormatWithDecimalDialog = new DecimalFormat("$#,##0.00"); // Định dạng với 2 chữ số thập phân
-                DecimalFormat decimalFormatWithoutDecimalDialog = new DecimalFormat("$#,##0"); // Định dạng không có chữ số thập phân
+                DecimalFormat decimalFormatWithDecimalDialog = new DecimalFormat("$#,##0.00");
+                DecimalFormat decimalFormatWithoutDecimalDialog = new DecimalFormat("$#,##0");
                 // Kiểm tra nếu giá là số nguyên hay không
                 if (productModel.getPrice() % 1 == 0) {
-                    // Hiển thị giá không có phần thập phân
                     txt_priceDialog.setText(decimalFormatWithoutDecimalDialog.format(productModel.getPrice()));
                 } else {
                     txt_priceDialog.setText(decimalFormatWithDecimalDialog.format(productModel.getPrice()));
+                }
+
+                int imageResourceId = getResources().getIdentifier(productModel.getImage(), "drawable", getPackageName());
+                if (imageResourceId != 0) {
+                    img_dialog.setImageResource(imageResourceId);
+                } else {
+                    Picasso.get().load(productModel.getImage()).into(img_dialog);
                 }
 
                 // Thêm sự kiện cho nút thoát
@@ -106,8 +118,6 @@ public class DetailActivity extends AppCompatActivity {
                 btn_add_to_cart.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // Thêm sản phẩm vào giỏ hàng
-//                        addToCart(product, Integer.parseInt(numberItemTxt.getText().toString()));
                         addToCart();
                         bottomSheetDialog.dismiss();
                     }
@@ -121,41 +131,36 @@ public class DetailActivity extends AppCompatActivity {
 
     private void addToCart() {
         int quantity = Integer.parseInt(numberItemTxt.getText().toString());
-        boolean isProductInCart = false; // Biến cờ để kiểm tra sản phẩm đã có trong giỏ hàng chưa
+        boolean isProductInCart = false;
 
-        // Duyệt qua danh sách giỏ hàng để kiểm tra sản phẩm đã có chưa
-        for(int i = 0; i < Utils.ShoppingCartList.size(); i++) {
-            if (Utils.ShoppingCartList.get(i).getProduct_id() == productModel.getProduct_id()) {
-                // Nếu sản phẩm đã tồn tại, tăng số lượng và cập nhật giá
-                int newQuantity = quantity + Utils.ShoppingCartList.get(i).getQuantity();
-                Utils.ShoppingCartList.get(i).setQuantity(newQuantity);
-
-                long price = (long) (productModel.getPrice()) * newQuantity;
-                Utils.ShoppingCartList.get(i).setPrice(price);
+        // Kiểm tra sản phẩm đã tồn tại trong giỏ hàng chưa
+        for (ShoppingCart cartItem : Utils.ShoppingCartList) {
+            if (cartItem.getProduct_id() == productModel.getProduct_id()) {
+                // Nếu sản phẩm đã tồn tại trong giỏ hàng, chỉ tăng số lượng sản phẩm đó
+                cartItem.setQuantity(cartItem.getQuantity() + quantity);
+                long newPrice = (long) (productModel.getPrice()) * cartItem.getQuantity();
+                cartItem.setPrice(newPrice);
                 isProductInCart = true;
                 break;
             }
         }
 
-        // Nếu sản phẩm chưa có trong giỏ hàng, thêm mới
-        if(!isProductInCart) {
+        // Nếu sản phẩm chưa có trong giỏ hàng, thêm sản phẩm mới
+        if (!isProductInCart) {
             long price = (long) (productModel.getPrice()) * quantity;
             ShoppingCart shoppingCart = new ShoppingCart();
+            shoppingCart.setOriginalPrice(productModel.getPrice());
             shoppingCart.setPrice(price);
             shoppingCart.setQuantity(quantity);
             shoppingCart.setProduct_id(productModel.getProduct_id());
             shoppingCart.setProduct_name(productModel.getProduct_name());
             shoppingCart.setImage(productModel.getImage());
             Utils.ShoppingCartList.add(shoppingCart);
-        }
 
-        // Cập nhật lại số lượng sản phẩm trong giỏ hàng
-        int totalItems = 0;
-        for (ShoppingCart cartItem : Utils.ShoppingCartList) {
-            totalItems += cartItem.getQuantity();
+            // Chỉ khi có sản phẩm mới được thêm, số lượng sản phẩm khác nhau tăng lên
+            int productCount = Utils.ShoppingCartList.size(); // Đếm số sản phẩm khác nhau
+            tvNotificationCountShopping.setText(String.valueOf(productCount));
         }
-
-        tvNotificationCountShopping.setText(String.valueOf(totalItems));
     }
 
     private void initData() {
@@ -219,9 +224,9 @@ public class DetailActivity extends AppCompatActivity {
         txt_desc = findViewById(R.id.txt_desc);
         img_pic = findViewById(R.id.img_pic);
         btnAddCart = findViewById(R.id.btnAddCart);
-        btnBuyNow = findViewById(R.id.btnBuyNow);
         txt_rate = findViewById(R.id.txt_rate);
         txt_soldquantity = findViewById(R.id.txt_soldquantity);
+        ivShoppingDetail = findViewById(R.id.ivShoppingDetail);
         tvNotificationCountShopping = findViewById(R.id.tvNotificationCountShopping);
         if(Utils.ShoppingCartList != null) {
             tvNotificationCountShopping.setText((String.valueOf(Utils.ShoppingCartList.size())));
