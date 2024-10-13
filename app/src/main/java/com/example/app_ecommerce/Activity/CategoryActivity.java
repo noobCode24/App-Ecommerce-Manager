@@ -1,6 +1,8 @@
 package com.example.app_ecommerce.Activity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -32,6 +34,7 @@ public class CategoryActivity extends AppCompatActivity {
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private List<ProductModel> productList;
     private CategoryAdapter categoryAdapter;
+    private ImageView btnBack;
     private int currentPage = 1;
     private int totalItems = 0; // Tổng số sản phẩm đã tải
     private static final int ITEMS_PER_PAGE = 6; // Số sản phẩm trên mỗi trang
@@ -52,7 +55,17 @@ public class CategoryActivity extends AppCompatActivity {
         apiEcommerce = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiEcommerce.class);
         Anhxa();
         getData();
+        ActionBack();
+    }
 
+    private void ActionBack() {
+        btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void getData() {

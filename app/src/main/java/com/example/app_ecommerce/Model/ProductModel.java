@@ -1,12 +1,32 @@
 package com.example.app_ecommerce.Model;
 
-public class ProductModel {
+import java.io.Serializable;
+
+public class ProductModel implements Serializable {
     private int product_id;
     private String product_name;
     private String product_desc;
     private double price;
     private int stock_quantity;
     private String image;
+    private double rating;
+    private int sold_quantity;
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public int getSold_quantity() {
+        return sold_quantity;
+    }
+
+    public void setSold_quantity(int sold_quantity) {
+        this.sold_quantity = sold_quantity;
+    }
 
     private int category_id;
 

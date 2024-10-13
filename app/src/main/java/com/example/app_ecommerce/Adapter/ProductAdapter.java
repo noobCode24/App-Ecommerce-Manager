@@ -18,6 +18,7 @@ import com.example.app_ecommerce.Model.ProductModel;
 import com.example.app_ecommerce.R;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.List;
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHolder> {
     private List<ProductModel> productList;
@@ -40,24 +41,37 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
     public void onBindViewHolder(@NonNull ProductAdapter.MyViewHolder holder, int position) {
         ProductModel productModel = productList.get(position);
         holder.txt_title.setText(productModel.getProduct_name());
-        holder.txt_stock.setText(String.valueOf(productModel.getStock_quantity()));
+        DecimalFormat decimalFormatWithDecimal = new DecimalFormat("$#,##0.00"); // Định dạng với 2 chữ số thập phân
+        DecimalFormat decimalFormatWithoutDecimal = new DecimalFormat("$#,##0"); // Định dạng không có chữ số thập phân
+        // Kiểm tra nếu giá là số nguyên hay không
         if (productModel.getPrice() % 1 == 0) {
-            holder.txt_price.setText(String.format("$%.0f", productModel.getPrice()));
+            // Hiển thị giá không có phần thập phân
+            holder.txt_price.setText(decimalFormatWithoutDecimal.format(productModel.getPrice()));
         } else {
-            holder.txt_price.setText(String.format("$%.2f", productModel.getPrice()));
+            // Hiển thị giá có phần thập phân
+            holder.txt_price.setText(decimalFormatWithDecimal.format(productModel.getPrice()));
         }
 
-        // Lấy ảnh từ drawable bằng resource ID
-        int imageResourceId = context.getResources().getIdentifier(productModel.getImage(), "drawable", context.getPackageName());
-        holder.item_image.setImageResource(imageResourceId);
+        // Định dạng và hiển thị số lượng bán
+        holder.txt_soldquantity.setText("Đã bán: " + formatSoldQuantity(productModel.getSold_quantity()));
 
-        // lấy ảnh từ internet
-        //Picasso.get().load(productList.get(position).getImage()).into(holder.item_image);
+        // Kiểm tra ảnh từ drawable
+        int imageResourceId = context.getResources().getIdentifier(productModel.getImage(), "drawable", context.getPackageName());
+
+        if (imageResourceId != 0) {
+            // Nếu ảnh tồn tại trong drawable, hiển thị nó
+            holder.item_image.setImageResource(imageResourceId);
+        } else {
+            // Nếu không, lấy ảnh từ internet bằng Picasso
+            Picasso.get().load(productModel.getImage()).into(holder.item_image);
+        }
+
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int pos, boolean isLongclick) {
                 if(!isLongclick) {
                     Intent intent = new Intent(context, DetailActivity.class);
+                    intent.putExtra("Detail", productModel);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 }
@@ -65,13 +79,27 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
         });
     }
 
+    private String formatSoldQuantity(int quantity) {
+        if (quantity >= 1000000) {
+            // Nếu số lượng lớn hơn 1 triệu, hiển thị với đơn vị "m" (ví dụ: 1,2m)
+            return String.format("%.1fm", quantity / 1000000.0);
+        } else if (quantity >= 1000) {
+            // Nếu số lượng lớn hơn 1 ngàn, hiển thị với đơn vị "k" (ví dụ: 1,1k)
+            return String.format("%.1fk", quantity / 1000.0);
+        } else {
+            // Nếu nhỏ hơn 1000, hiển thị như bình thường
+            return String.valueOf(quantity);
+        }
+    }
+
+
     @Override
     public int getItemCount() {
         return productList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView txt_title, txt_price, txt_stock;
+        TextView txt_title, txt_price, txt_rate, txt_soldquantity;
         ImageView item_image;
 
         private ItemClickListener itemClickListener;
@@ -79,7 +107,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHo
             super(itemView);
             txt_title = itemView.findViewById(R.id.item_title);
             txt_price = itemView.findViewById(R.id.txt_price);
-            txt_stock = itemView.findViewById(R.id.txtStock);
+            txt_soldquantity = itemView.findViewById(R.id.SoldquantityTxt);
             item_image = itemView.findViewById(R.id.item_image);
             itemView.setOnClickListener(this);
         }
