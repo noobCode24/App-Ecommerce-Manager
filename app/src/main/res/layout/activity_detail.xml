@@ -244,7 +244,7 @@
             android:background="@drawable/blue_button_background"
             android:backgroundTint="@null"
             android:scaleType="fitCenter"
-            android:src="@drawable/result_cart" />
+            android:src="@drawable/ic_cart_24" />
 
         <Button
             android:id="@+id/btnBuyNow"

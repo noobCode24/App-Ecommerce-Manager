@@ -98,6 +98,11 @@ public class MainActivity extends AppCompatActivity {
         categoryHeadPhone = findViewById(R.id.categoryHeadPhone);
         categoryGaming = findViewById(R.id.categoryGaming);
         seeAll = findViewById(R.id.tvSeeAll);
+
+        //Danh sách toàn cục
+        if (Utils.ShoppingCartList == null){
+            Utils.ShoppingCartList = new ArrayList<>();
+        }
     }
 
     private void getEventClick() {
