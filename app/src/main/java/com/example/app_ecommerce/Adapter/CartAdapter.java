@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_ecommerce.Model.ShoppingCart;
 import com.example.app_ecommerce.R;
+import com.example.app_ecommerce.Retrofit.OnCartQuantityChangeListener;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -20,10 +21,12 @@ import java.util.List;
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> {
     Context context;
     List<ShoppingCart> CartList;
+    OnCartQuantityChangeListener quantityChangeListener;
 
-    public CartAdapter(Context context, List<ShoppingCart> cartList) {
+    public CartAdapter(Context context, List<ShoppingCart> cartList, OnCartQuantityChangeListener quantityChangeListener) {
         CartList = cartList;
         this.context = context;
+        this.quantityChangeListener = quantityChangeListener;
     }
 
     @NonNull
@@ -55,6 +58,51 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
         } else {
             Picasso.get().load(shoppingCart.getImage()).into(holder.img_picCart);
         }
+
+        // Xử lý sự kiện nút giảm số lượng
+        holder.minusCartBtn.setOnClickListener(v -> {
+            int currentQuantity = shoppingCart.getQuantity();
+            if (currentQuantity > 1) {
+                shoppingCart.setQuantity(currentQuantity - 1);
+                holder.numberItemTxt.setText(String.valueOf(shoppingCart.getQuantity()));
+
+                // Cập nhật giá sản phẩm
+                double totalEachItem = shoppingCart.getQuantity() * shoppingCart.getOriginalPrice();
+                shoppingCart.setPrice(totalEachItem);
+                holder.txt_totalEachItem.setText(totalEachItem % 1 == 0
+                        ? decimalFormatWithoutDecimal.format(totalEachItem)
+                        : decimalFormatWithDecimal.format(totalEachItem));
+
+                // Gọi interface để thông báo sự thay đổi số lượng
+                quantityChangeListener.onQuantityChanged();
+
+                // Cập nhật lại chỉ mục hiện tại
+                notifyItemChanged(holder.getAdapterPosition());
+            } else {
+                CartList.remove(position);
+                notifyItemRemoved(position);
+            }
+        });
+
+        // Xử lý sự kiện nút tăng số lượng
+        holder.plusCartBtn.setOnClickListener(v -> {
+            int currentQuantity = shoppingCart.getQuantity();
+            shoppingCart.setQuantity(currentQuantity + 1);
+            holder.numberItemTxt.setText(String.valueOf(shoppingCart.getQuantity()));
+
+            // Cập nhật giá sản phẩm
+            double totalEachItem = shoppingCart.getQuantity() * shoppingCart.getOriginalPrice();
+            shoppingCart.setPrice(totalEachItem);
+            holder.txt_totalEachItem.setText(totalEachItem % 1 == 0
+                    ? decimalFormatWithoutDecimal.format(totalEachItem)
+                    : decimalFormatWithDecimal.format(totalEachItem));
+
+            // Gọi interface để thông báo sự thay đổi số lượng
+            quantityChangeListener.onQuantityChanged();
+
+            // Cập nhật lại chỉ mục hiện tại
+            notifyItemChanged(holder.getAdapterPosition());
+        });
     }
 
     @Override

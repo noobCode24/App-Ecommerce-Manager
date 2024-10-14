@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private ConstraintLayout categoryPC, categoryPhone, categoryHeadPhone, categoryGaming;
     private TextView seeAll;
     private LinearLayout layoutCart;
+    private TextView tvNotificationCountShopping;
+    private ImageView ivShopping;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +73,22 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), CartActivity.class);
             startActivity(intent);
         });
+
+        ivShopping.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, CartActivity.class);
+            startActivity(intent);
+        });
+    }
+
+    private void updateCartCount() {
+        int productCount = Utils.ShoppingCartList.size(); // Đếm số sản phẩm khác nhau trong giỏ hàng
+        tvNotificationCountShopping.setText(String.valueOf(productCount));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateCartCount(); // Cập nhật số lượng giỏ hàng
     }
 
     private void getProducts() {
@@ -110,7 +129,8 @@ public class MainActivity extends AppCompatActivity {
 
         //Khoi tao Linearlayout
         layoutCart = findViewById(R.id.layoutCart);
-
+        ivShopping = findViewById(R.id.ivShopping);
+        tvNotificationCountShopping = findViewById(R.id.tvNotificationCountShopping);
         //Danh sách toàn cục
         if (Utils.ShoppingCartList == null){
             Utils.ShoppingCartList = new ArrayList<>();

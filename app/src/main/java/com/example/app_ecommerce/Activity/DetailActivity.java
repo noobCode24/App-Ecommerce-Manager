@@ -10,6 +10,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -45,14 +46,31 @@ public class DetailActivity extends AppCompatActivity {
         ActionBack();
         initData();
         initControl();
+        openCartActivity();
     }
 
-    private void initControl() {
+    private void openCartActivity() {
         ivShoppingDetail.setOnClickListener(v -> {
             Intent intent = new Intent(DetailActivity.this, CartActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, 22);
         });
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 22 && resultCode == RESULT_OK && data != null) {
+            // Lấy số lượng sản phẩm trong giỏ hàng đã cập nhật
+            int updatedCartCount = data.getIntExtra("updated_cart_count", 0);
+
+            // Cập nhật lại số lượng sản phẩm hiển thị trong tvNotificationCountShopping
+            tvNotificationCountShopping.setText(String.valueOf(updatedCartCount));
+        }
+    }
+
+
+    private void initControl() {
         btnAddCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
