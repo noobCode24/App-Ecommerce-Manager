@@ -19,6 +19,7 @@
             android:orientation="vertical"
             android:paddingBottom="70dp">
 
+            <!-- EditText for search -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/headerLayout"
                 android:layout_width="match_parent"
@@ -45,6 +46,39 @@
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvWelcome" />
+
+                <ImageView
+                    android:id="@+id/ivShopping"
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="3dp"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvUsername"
+                    app:layout_constraintEnd_toStartOf="@+id/ivNotificationIcon"
+                    app:layout_constraintTop_toTopOf="@+id/tvUsername"
+                    app:srcCompat="@drawable/online_shopping" />
+
+                <ImageView
+                    android:id="@+id/ivNotificationBadgeShopping"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@+id/ivShopping"
+                    app:layout_constraintEnd_toEndOf="@+id/ivShopping"
+                    app:layout_constraintStart_toEndOf="@+id/ivShopping"
+                    app:layout_constraintTop_toTopOf="@+id/ivShopping"
+                    app:srcCompat="@drawable/red_circle" />
+
+                <TextView
+                    android:id="@+id/tvNotificationCountShopping"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:textColor="@color/white"
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivNotificationBadgeShopping"
+                    app:layout_constraintEnd_toEndOf="@+id/ivNotificationBadgeShopping"
+                    app:layout_constraintStart_toStartOf="@+id/ivNotificationBadgeShopping" />
 
                 <ImageView
                     android:id="@+id/ivNotificationIcon"
@@ -79,7 +113,6 @@
                     app:layout_constraintStart_toStartOf="@+id/ivNotificationBadge" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- EditText for search -->
             <EditText
                 android:id="@+id/etSearch"
                 android:layout_width="match_parent"
