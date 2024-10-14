@@ -38,7 +38,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/tvUsername"
+                    android:id="@+id/txt_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Hoang Vu"
@@ -54,9 +54,9 @@
                     android:layout_marginEnd="24dp"
                     android:layout_marginBottom="3dp"
                     android:scaleType="fitCenter"
-                    app:layout_constraintBottom_toBottomOf="@+id/tvUsername"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_username"
                     app:layout_constraintEnd_toStartOf="@+id/ivNotificationIcon"
-                    app:layout_constraintTop_toTopOf="@+id/tvUsername"
+                    app:layout_constraintTop_toTopOf="@+id/txt_username"
                     app:srcCompat="@drawable/online_shopping" />
 
                 <ImageView

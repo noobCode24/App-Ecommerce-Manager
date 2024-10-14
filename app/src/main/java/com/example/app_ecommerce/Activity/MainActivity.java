@@ -1,5 +1,7 @@
 package com.example.app_ecommerce.Activity;
 
+import static com.example.app_ecommerce.utils.Utils.user_current;
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -21,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_ecommerce.Adapter.ProductAdapter;
 import com.example.app_ecommerce.Model.ProductModel;
+import com.example.app_ecommerce.Model.UserModel;
 import com.example.app_ecommerce.R;
 import com.example.app_ecommerce.Retrofit.ApiEcommerce;
 import com.example.app_ecommerce.Retrofit.RetrofitClient;
@@ -36,12 +39,11 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class MainActivity extends AppCompatActivity {
     private ProductAdapter productAdapter;
     private List<ProductModel> productList;
-
     private RecyclerView rvPopularProducts;
     private CompositeDisposable compositeDisposable;
     private ApiEcommerce apiEcommerce;
     private ConstraintLayout categoryPC, categoryPhone, categoryHeadPhone, categoryGaming;
-    private TextView seeAll;
+    private TextView seeAll, txt_username;
     private LinearLayout layoutCart;
     private TextView tvNotificationCountShopping;
     private ImageView ivShopping;
@@ -69,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initControl() {
+        txt_username.setText(user_current.getUser_name());
         layoutCart.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), CartActivity.class);
             startActivity(intent);
@@ -131,6 +134,8 @@ public class MainActivity extends AppCompatActivity {
         layoutCart = findViewById(R.id.layoutCart);
         ivShopping = findViewById(R.id.ivShopping);
         tvNotificationCountShopping = findViewById(R.id.tvNotificationCountShopping);
+
+        txt_username = findViewById(R.id.txt_username);
         //Danh sách toàn cục
         if (Utils.ShoppingCartList == null){
             Utils.ShoppingCartList = new ArrayList<>();
