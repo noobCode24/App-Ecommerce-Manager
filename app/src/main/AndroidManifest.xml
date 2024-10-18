@@ -27,6 +27,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".Activity.ResetPassActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.RegisterActivity"
             android:exported="false" />
         <activity

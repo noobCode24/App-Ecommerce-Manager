@@ -34,4 +34,11 @@ public interface ApiEcommerce {
             @Field("email") String email,
             @Field("pass") String pass
     );
+
+    @POST("sendEmail.php")
+    @FormUrlEncoded
+    Observable<UserModel> resetPass(
+            @Field("email") String email
+    );
+
 }

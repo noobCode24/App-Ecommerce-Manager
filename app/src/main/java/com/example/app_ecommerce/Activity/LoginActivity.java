@@ -27,7 +27,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class LoginActivity extends AppCompatActivity {
-    private TextView txt_openRegister;
+    private TextView txt_openRegister, txt_forgotpass;
     private EditText txt_email, txt_pass;
     private Button btn_Login;
     private ApiEcommerce apiEcommerce;
@@ -51,6 +51,11 @@ public class LoginActivity extends AppCompatActivity {
     private void initControl() {
         txt_openRegister.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
+        });
+
+        txt_forgotpass.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, ResetPassActivity.class);
             startActivity(intent);
         });
 
@@ -99,6 +104,7 @@ public class LoginActivity extends AppCompatActivity {
         txt_email = findViewById(R.id.txt_email);
         txt_pass = findViewById(R.id.txt_pass);
         btn_Login = findViewById(R.id.btn_Login);
+        txt_forgotpass = findViewById(R.id.txt_forgotpass);
 
         //read data
         if(Paper.book().read("email") != null && Paper.book().read("pass") != null) {
