@@ -205,11 +205,11 @@
                     app:srcCompat="@drawable/location" />
 
                 <TextView
-                    android:id="@+id/textView14"
-                    style="@style/textStyleBold"
+                    android:id="@+id/txtAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="NY-downtown-no3"
+                    android:layout_marginStart="8dp"
+                    android:text="Address"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView9"
                     app:layout_constraintStart_toEndOf="@+id/imageView9"
                     app:layout_constraintTop_toTopOf="@+id/imageView9" />
@@ -222,13 +222,13 @@
                     android:background="@color/grey"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView14" />
+                    app:layout_constraintTop_toBottomOf="@+id/txtAddress" />
 
                 <ImageView
-                    android:id="@+id/imageView10"
+                    android:id="@+id/btntoAddress"
                     android:layout_width="18dp"
                     android:layout_height="18dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView14"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtAddress"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/arrow_detail" />
@@ -243,7 +243,7 @@
                     app:srcCompat="@drawable/credit_card" />
 
                 <TextView
-                    android:id="@+id/textView15"
+                    android:id="@+id/txtCash"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -253,10 +253,10 @@
                     app:layout_constraintTop_toTopOf="@+id/imageView11" />
 
                 <ImageView
-                    android:id="@+id/imageView12"
+                    android:id="@+id/btntopay"
                     android:layout_width="18dp"
                     android:layout_height="18dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView15"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtCash"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/textView17"
                     app:srcCompat="@drawable/arrow_detail" />
