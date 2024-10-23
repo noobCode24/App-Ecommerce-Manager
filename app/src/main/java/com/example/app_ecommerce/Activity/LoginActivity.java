@@ -2,6 +2,7 @@ package com.example.app_ecommerce.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -32,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button btn_Login;
     private ApiEcommerce apiEcommerce;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private boolean isLogin = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,25 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                     //save
                     Paper.book().write("email", str_email);
                     Paper.book().write("pass", str_pass);
-
-                    compositeDisposable.add(apiEcommerce.login(str_email, str_pass)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
-                                    userModel -> {
-                                        if (userModel.isSuccess()){
-                                            Utils.user_current = userModel.getResult().get(0);
-                                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                            startActivity(intent);
-                                        } else {
-                                            Toast.makeText(getApplicationContext(), "Login failed: " + userModel.getMessage(), Toast.LENGTH_SHORT).show();
-                                        }
-                                    },
-                                    throwable -> {
-                                        Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                                    }
-                            )
-                    );
+                    Login(str_email, str_pass);
                 }
             }
         });
@@ -110,7 +94,41 @@ public class LoginActivity extends AppCompatActivity {
         if(Paper.book().read("email") != null && Paper.book().read("pass") != null) {
             txt_email.setText(Paper.book().read("email"));
             txt_pass.setText(Paper.book().read("pass"));
+            if (Paper.book().read("isLogin") != null) {
+                boolean flag = Paper.book().read("isLogin");
+                if (flag) {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Login(Paper.book().read("email"), Paper.book().read("pass"));
+                        }
+                    }, 1000);
+                }
+            }
         }
+    }
+
+    private void Login(String email, String pass) {
+        compositeDisposable.add(apiEcommerce.login(email, pass)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        userModel -> {
+                            if (userModel.isSuccess()){
+                                isLogin = true;
+                                Paper.book().write("isLogin", isLogin);
+                                Utils.user_current = userModel.getResult().get(0);
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Login failed: " + userModel.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        },
+                        throwable -> {
+                            Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                )
+        );
     }
 
     @Override
