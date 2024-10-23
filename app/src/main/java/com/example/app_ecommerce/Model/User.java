@@ -5,7 +5,7 @@ public class User {
     private String email;
     private String pass;
     private String user_name;
-    private String moblie;
+    private String mobile;
 
     public String getEmail() {
         return email;
@@ -39,11 +39,11 @@ public class User {
         this.user_name = user_name;
     }
 
-    public String getMoblie() {
-        return moblie;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setMoblie(String moblie) {
-        this.moblie = moblie;
+    public void setMoblie(String mobile) {
+        this.mobile = mobile;
     }
 }

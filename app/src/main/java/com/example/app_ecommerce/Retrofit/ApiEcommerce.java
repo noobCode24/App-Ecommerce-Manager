@@ -41,4 +41,15 @@ public interface ApiEcommerce {
             @Field("email") String email
     );
 
+    @POST("invoice.php")
+    @FormUrlEncoded
+    Observable<UserModel> createOrder(
+            @Field("email") String email,
+            @Field("mobile") String mobile,
+            @Field("address") String address,
+            @Field("quantity") int quantity,
+            @Field("total_amount") double total_amount,
+            @Field("users_id") int users_id,
+            @Field("detail") String detail
+    );
 }

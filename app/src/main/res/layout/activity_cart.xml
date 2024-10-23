@@ -7,6 +7,17 @@
     android:layout_height="match_parent"
     tools:context=".Activity.CartActivity">
 
+    <TextView
+        android:id="@+id/txtCartEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Cart is empty"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/scrollView2"
+        android:visibility="gone"/>
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
@@ -45,10 +56,12 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewCart"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:visibility="gone">
 
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -60,14 +73,18 @@
                 android:text="Order Summary"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutline1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/grey_background"
-                android:padding="12dp">
+                android:padding="12dp"
+                android:visibility="gone"
+                >
 
                 <TextView
                     android:id="@+id/textView9"
@@ -169,14 +186,17 @@
                 android:text="Infomation"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutline2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/grey_background"
-                android:padding="12dp">
+                android:padding="12dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/textView17"
@@ -272,7 +292,8 @@
                 android:background="@drawable/red_button_background"
                 android:text="Order Now"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:visibility="gone"/>
 
         </LinearLayout>
     </ScrollView>
