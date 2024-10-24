@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_ecommerce.Adapter.ProductAdapter;
 import com.example.app_ecommerce.Model.ProductModel;
+import com.example.app_ecommerce.Model.User;
 import com.example.app_ecommerce.Model.UserModel;
 import com.example.app_ecommerce.R;
 import com.example.app_ecommerce.Retrofit.ApiEcommerce;
@@ -32,6 +33,7 @@ import com.example.app_ecommerce.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.paperdb.Paper;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private ApiEcommerce apiEcommerce;
     private ConstraintLayout categoryPC, categoryPhone, categoryHeadPhone, categoryGaming;
     private TextView seeAll, txt_username;
-    private LinearLayout layoutCart, layoutWishlist;
+    private LinearLayout layoutCart, layoutWishlist, layoutProfile;
     private TextView tvNotificationCountShopping;
     private ImageView ivShopping, img_searchMain;
 
@@ -60,6 +62,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         apiEcommerce = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiEcommerce.class);
+        Paper.init(this);
+        if(Paper.book().read("user") != null){
+            User user = Paper.book().read("user");
+            Utils.user_current = user;
+        }
         Anhxa();
         if (isConnected(this)){
             getProducts();
@@ -89,6 +96,14 @@ public class MainActivity extends AppCompatActivity {
 
         img_searchMain.setOnClickListener(v -> {
             openCategoryActivity("searchAll");
+        });
+
+        layoutProfile.setOnClickListener(v -> {
+//            xoa key user
+            Paper.book().delete("user");
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
         });
     }
 
@@ -142,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
         //Khoi tao Linearlayout
         layoutCart = findViewById(R.id.layoutCart);
         layoutWishlist = findViewById(R.id.layoutWishlist);
+        layoutProfile = findViewById(R.id.layoutProfile);
         tvNotificationCountShopping = findViewById(R.id.tvNotificationCountShopping);
 
         //Khoi tao ImageView
