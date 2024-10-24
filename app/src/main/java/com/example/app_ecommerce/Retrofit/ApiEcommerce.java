@@ -1,5 +1,6 @@
 package com.example.app_ecommerce.Retrofit;
 
+import com.example.app_ecommerce.Model.InvoiceModel;
 import com.example.app_ecommerce.Model.UserModel;
 import com.example.app_ecommerce.Model.getProductModel;
 
@@ -51,5 +52,11 @@ public interface ApiEcommerce {
             @Field("total_amount") double total_amount,
             @Field("users_id") int users_id,
             @Field("detail") String detail
+    );
+
+    @POST("getInvoice.php")
+    @FormUrlEncoded
+    Observable<InvoiceModel> getInvoice(
+            @Field("users_id") int users_id
     );
 }
