@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.app_ecommerce'
+    namespace 'com.manager.app_ecommerce'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.app_ecommerce"
+        applicationId "com.manager.app_ecommerce"
         minSdk 24
         targetSdk 34
         versionCode 1
