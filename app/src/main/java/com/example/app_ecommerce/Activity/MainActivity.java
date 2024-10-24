@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private ApiEcommerce apiEcommerce;
     private ConstraintLayout categoryPC, categoryPhone, categoryHeadPhone, categoryGaming;
     private TextView seeAll, txt_username;
-    private LinearLayout layoutCart;
+    private LinearLayout layoutCart, layoutWishlist;
     private TextView tvNotificationCountShopping;
     private ImageView ivShopping;
 
@@ -77,10 +77,17 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        layoutWishlist.setOnClickListener(v ->{
+            Intent intent = new Intent(getApplicationContext(), PurchaseHistoryActivity.class);
+            startActivity(intent);
+        });
+
         ivShopping.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, CartActivity.class);
             startActivity(intent);
         });
+
+
     }
 
     private void updateCartCount() {
@@ -133,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
         //Khoi tao Linearlayout
         layoutCart = findViewById(R.id.layoutCart);
         ivShopping = findViewById(R.id.ivShopping);
+        layoutWishlist = findViewById(R.id.layoutWishlist);
         tvNotificationCountShopping = findViewById(R.id.tvNotificationCountShopping);
 
         txt_username = findViewById(R.id.txt_username);
