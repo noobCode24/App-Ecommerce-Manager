@@ -8,7 +8,20 @@
     android:layout_height="match_parent"
     tools:context=".Activity.CategoryActivity">
 
+    <TextView
+        android:id="@+id/txtHistoryEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="There are no products in this category."
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/scrollView2"
+        android:visibility="gone"/>
+
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -37,7 +50,7 @@
 
                 <EditText
                     android:id="@+id/etSearch"
-                    android:layout_width="200dp"
+                    android:layout_width="240dp"
                     android:layout_height="38dp"
                     android:layout_marginStart="8dp"
                     android:background="@drawable/edittext_background"
@@ -52,26 +65,16 @@
                     app:layout_constraintTop_toTopOf="@+id/btnBack" />
 
                 <ImageView
-                    android:id="@+id/ivNotificationIcon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/ivShopping"
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="20dp"
+                    android:scaleType="fitCenter"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.4"
-                    app:srcCompat="@drawable/bell" />
-
-                <ImageView
-                    android:id="@+id/ivShopping"
-                    android:layout_width="23dp"
-                    android:layout_height="23dp"
-                    android:scaleType="fitCenter"
-                    app:layout_constraintBottom_toBottomOf="@+id/ivNotificationIcon"
-                    app:layout_constraintEnd_toStartOf="@+id/ivNotificationIcon"
-                    app:layout_constraintStart_toEndOf="@+id/etSearch"
-                    app:layout_constraintTop_toTopOf="@+id/ivNotificationIcon"
                     app:srcCompat="@drawable/online_shopping" />
 
                 <ImageView
@@ -95,27 +98,6 @@
                     app:layout_constraintEnd_toEndOf="@+id/ivNotificationBadgeShopping"
                     app:layout_constraintStart_toStartOf="@+id/ivNotificationBadgeShopping" />
 
-                <ImageView
-                    android:id="@+id/ivNotificationBadge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toTopOf="@+id/ivNotificationIcon"
-                    app:layout_constraintEnd_toEndOf="@+id/ivNotificationIcon"
-                    app:layout_constraintStart_toEndOf="@+id/ivNotificationIcon"
-                    app:layout_constraintTop_toTopOf="@+id/ivNotificationIcon"
-                    app:srcCompat="@drawable/red_circle" />
-
-                <TextView
-                    android:id="@+id/tvNotificationCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1"
-                    android:textColor="@color/white"
-                    android:textSize="11sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/ivNotificationBadge"
-                    app:layout_constraintEnd_toEndOf="@+id/ivNotificationBadge"
-                    app:layout_constraintStart_toStartOf="@+id/ivNotificationBadge" />
-
                 <View
                     android:id="@+id/view7"
                     android:layout_width="wrap_content"
@@ -132,7 +114,8 @@
                 android:clipToPadding="false"
                 android:layout_marginTop="2dp"
                 android:paddingStart="16dp"
-                android:paddingEnd="16dp" />
+                android:paddingEnd="16dp"
+                android:visibility="gone"/>
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

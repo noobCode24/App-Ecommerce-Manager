@@ -59,4 +59,17 @@ public interface ApiEcommerce {
     Observable<InvoiceModel> getInvoice(
             @Field("users_id") int users_id
     );
+
+    @POST("searchByCategory.php")
+    @FormUrlEncoded
+    Observable<getProductModel> searchByCategory(
+            @Field("category_id") int category_id,
+            @Field("search") String search
+    );
+
+    @POST("search.php")
+    @FormUrlEncoded
+    Observable<getProductModel> search(
+            @Field("search") String search
+    );
 }

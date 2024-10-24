@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView seeAll, txt_username;
     private LinearLayout layoutCart, layoutWishlist;
     private TextView tvNotificationCountShopping;
-    private ImageView ivShopping;
+    private ImageView ivShopping, img_searchMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +87,9 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-
+        img_searchMain.setOnClickListener(v -> {
+            openCategoryActivity("searchAll");
+        });
     }
 
     private void updateCartCount() {
@@ -139,9 +141,12 @@ public class MainActivity extends AppCompatActivity {
 
         //Khoi tao Linearlayout
         layoutCart = findViewById(R.id.layoutCart);
-        ivShopping = findViewById(R.id.ivShopping);
         layoutWishlist = findViewById(R.id.layoutWishlist);
         tvNotificationCountShopping = findViewById(R.id.tvNotificationCountShopping);
+
+        //Khoi tao ImageView
+        ivShopping = findViewById(R.id.ivShopping);
+        img_searchMain = findViewById(R.id.img_searchMain);
 
         txt_username = findViewById(R.id.txt_username);
         //Danh sách toàn cục

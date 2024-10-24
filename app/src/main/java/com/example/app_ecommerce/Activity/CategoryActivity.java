@@ -2,7 +2,10 @@ package com.example.app_ecommerce.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,8 +40,9 @@ public class CategoryActivity extends AppCompatActivity {
     private List<ProductModel> productList;
     private CategoryAdapter categoryAdapter;
     private ImageView btnBack;
-    private TextView tvNotificationCountShopping;
+    private TextView tvNotificationCountShopping, txtProductByCategoryEmpty;
     private ImageView ivShopping;
+    private EditText etSearch;
 
 
     @Override
@@ -58,6 +62,85 @@ public class CategoryActivity extends AppCompatActivity {
         ActionBack();
         updateCartCount();
         initControl();
+        getSearch();
+    }
+
+    private void getSearch() {
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                getDataSearch();
+            }
+        });
+    }
+
+    private void getDataSearch(){
+        String str_search = etSearch.getText().toString().trim();
+        String category = getIntent().getStringExtra("category");
+        // Nếu danh mục là "All" hoặc "searchAll" thì tìm kiếm toàn bộ sản phẩm
+        if (category.equals("All") || category.equals("searchAll")) {
+            compositeDisposable.add(apiEcommerce.search(str_search)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            getProductModel -> {
+                                if (getProductModel.isSuccess() && !getProductModel.getResult().isEmpty()) {
+                                    productList = getProductModel.getResult();
+                                    categoryAdapter = new CategoryAdapter(this, productList);
+                                    rvAllProducts.setAdapter(categoryAdapter);
+                                    hindAndShowRV(true);
+                                } else {
+                                    hindAndShowRV(false);
+                                    Toast.makeText(this, "Không có sản phẩm nào.", Toast.LENGTH_LONG).show();
+                                }
+                            },
+                            throwable -> {
+                                Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                    ));
+        } else {
+            // Nếu danh mục cụ thể, tìm kiếm trong danh mục đó
+            int categoryId = getCategoryId(category);
+            compositeDisposable.add(apiEcommerce.searchByCategory(categoryId, str_search)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            getProductModel -> {
+                                if (getProductModel.isSuccess() && !getProductModel.getResult().isEmpty()) {
+                                    productList = getProductModel.getResult();
+                                    categoryAdapter = new CategoryAdapter(this, productList);
+                                    rvAllProducts.setAdapter(categoryAdapter);
+                                    hindAndShowRV(true);
+                                } else {
+                                    hindAndShowRV(false);
+//                                    Toast.makeText(this, "Không có sản phẩm nào trong danh mục " + category, Toast.LENGTH_LONG).show();
+                                }
+                            },
+                            throwable -> {
+                                Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                    ));
+        }
+    }
+
+    private void hindAndShowRV(boolean b) {
+        if (b) {
+            rvAllProducts.setVisibility(View.VISIBLE);
+            txtProductByCategoryEmpty.setVisibility(View.GONE);
+        } else {
+            rvAllProducts.setVisibility(View.GONE);
+            txtProductByCategoryEmpty.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initControl() {
@@ -92,7 +175,7 @@ public class CategoryActivity extends AppCompatActivity {
     private void getData() {
         String category = getIntent().getStringExtra("category");
 
-        if (category.equals("All")){
+        if (category.equals("All") || category.equals("searchAll")){
             // Lấy tất cả sản phẩm
             compositeDisposable.add(apiEcommerce.getProduct()
                     .subscribeOn(Schedulers.io())
@@ -105,6 +188,9 @@ public class CategoryActivity extends AppCompatActivity {
                                     categoryAdapter = new CategoryAdapter(this,productList);
                                     rvAllProducts.setAdapter(categoryAdapter);
                                     // Cập nhật adapter ở đây
+                                    hindAndShowRV(true);
+                                }else {
+                                    hindAndShowRV(false);
                                 }
                             },
                             throwable -> {
@@ -122,6 +208,9 @@ public class CategoryActivity extends AppCompatActivity {
                                     productList = getProductModel.getResult();
                                     categoryAdapter = new CategoryAdapter(this,productList);
                                     rvAllProducts.setAdapter(categoryAdapter);
+                                    hindAndShowRV(true);
+                                }else{
+                                    hindAndShowRV(true);
                                 }
                             },
                             throwable -> {
@@ -153,6 +242,8 @@ public class CategoryActivity extends AppCompatActivity {
         rvAllProducts.setHasFixedSize(true);
         ivShopping = findViewById(R.id.ivShopping);
         tvNotificationCountShopping = findViewById(R.id.tvNotificationCountShopping);
+        etSearch = findViewById(R.id.etSearch);
+        txtProductByCategoryEmpty = findViewById(R.id.txtHistoryEmpty);
     }
 
     @Override
