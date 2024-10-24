@@ -48,15 +48,25 @@
                     app:layout_constraintTop_toBottomOf="@+id/tvWelcome" />
 
                 <ImageView
+                    android:id="@+id/img_searchMain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/search_icon"
+                    android:layout_marginRight="24dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivShopping"
+                    app:layout_constraintEnd_toStartOf="@+id/ivShopping"
+                    app:layout_constraintTop_toTopOf="@+id/ivShopping" />
+
+                <ImageView
                     android:id="@+id/ivShopping"
                     android:layout_width="23dp"
                     android:layout_height="23dp"
-                    android:layout_marginEnd="24dp"
-                    android:layout_marginBottom="3dp"
-                    android:scaleType="fitCenter"
-                    app:layout_constraintBottom_toBottomOf="@+id/txt_username"
-                    app:layout_constraintEnd_toStartOf="@+id/ivNotificationIcon"
-                    app:layout_constraintTop_toTopOf="@+id/txt_username"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0"
                     app:srcCompat="@drawable/online_shopping" />
 
                 <ImageView
@@ -80,37 +90,6 @@
                     app:layout_constraintEnd_toEndOf="@+id/ivNotificationBadgeShopping"
                     app:layout_constraintStart_toStartOf="@+id/ivNotificationBadgeShopping" />
 
-                <ImageView
-                    android:id="@+id/ivNotificationIcon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/bell" />
-
-                <ImageView
-                    android:id="@+id/ivNotificationBadge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toTopOf="@+id/ivNotificationIcon"
-                    app:layout_constraintEnd_toEndOf="@+id/ivNotificationIcon"
-                    app:layout_constraintStart_toEndOf="@+id/ivNotificationIcon"
-                    app:layout_constraintTop_toTopOf="@+id/ivNotificationIcon"
-                    app:srcCompat="@drawable/red_circle" />
-
-                <TextView
-                    android:id="@+id/tvNotificationCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1"
-                    android:textColor="@color/white"
-                    android:textSize="11sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/ivNotificationBadge"
-                    app:layout_constraintEnd_toEndOf="@+id/ivNotificationBadge"
-                    app:layout_constraintStart_toStartOf="@+id/ivNotificationBadge" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <EditText
