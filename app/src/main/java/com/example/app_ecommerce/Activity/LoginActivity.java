@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            Login(Paper.book().read("email"), Paper.book().read("pass"));
+//                            Login(Paper.book().read("email"), Paper.book().read("pass"));
                         }
                     }, 1000);
                 }
@@ -118,8 +118,11 @@ public class LoginActivity extends AppCompatActivity {
                                 isLogin = true;
                                 Paper.book().write("isLogin", isLogin);
                                 Utils.user_current = userModel.getResult().get(0);
+//                                luu lai thong tin nguoi dung
+                                Paper.book().write("user", userModel.getResult().get(0));
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
+                                finish();
                             } else {
                                 Toast.makeText(getApplicationContext(), "Login failed: " + userModel.getMessage(), Toast.LENGTH_SHORT).show();
                             }
