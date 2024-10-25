@@ -26,6 +26,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildFeatures{
+        viewBinding true
+        dataBinding true
+    }
 }
 
 dependencies {
@@ -56,4 +60,6 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.11.0'
 //    Lottie
     implementation 'com.airbnb.android:lottie:6.5.2'
+//    neumophism
+    implementation 'com.github.fornewid:neumorphism:0.3.2'
 }

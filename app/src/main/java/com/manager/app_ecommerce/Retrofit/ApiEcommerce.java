@@ -1,6 +1,7 @@
 package com.manager.app_ecommerce.Retrofit;
 
 import com.manager.app_ecommerce.Model.InvoiceModel;
+import com.manager.app_ecommerce.Model.MessageModel;
 import com.manager.app_ecommerce.Model.UserModel;
 import com.manager.app_ecommerce.Model.getProductModel;
 
@@ -71,5 +72,16 @@ public interface ApiEcommerce {
     @FormUrlEncoded
     Observable<getProductModel> search(
             @Field("search") String search
+    );
+
+    @POST("insertProduct.php")
+    @FormUrlEncoded
+    Observable<MessageModel> insertProduct(
+            @Field("product_name") String product_name,
+            @Field("category_id") int category_id,
+            @Field("price") double price,
+            @Field("quantity") int quantity,
+            @Field("description") String description,
+            @Field("image") String image
     );
 }

@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.ManagerActivity">
+    tools:context=".Activity.WorkingWithPC">
 
     <LinearLayout
         android:id="@+id/linearLayout4"
@@ -33,7 +33,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Manager"
+                android:text="PC"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="25dp"
@@ -55,6 +55,7 @@
                 app:neumorph_shadowElevation="8dp">
 
                 <LinearLayout
+                    android:id="@+id/LayoutAdd"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
@@ -66,14 +67,14 @@
                         android:id="@+id/imagePC"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/result_presentation" />
+                        android:src="@drawable/result_add" />
 
                     <!-- Thêm TextView bên trong LinearLayout -->
                     <TextView
                         android:id="@+id/textPC"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="PC"
+                        android:text="Add"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         style="@style/textStyleBold"
@@ -91,6 +92,7 @@
                 android:padding="8dp"
                 app:neumorph_shadowElevation="8dp">
                 <LinearLayout
+                    android:id="@+id/LayoutFix"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
@@ -101,88 +103,13 @@
                         android:id="@+id/imagePhone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/result_notification" />
+                        android:src="@drawable/result_tool" />
 
                     <TextView
                         android:id="@+id/textPhone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Phone"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="8dp" />
-                </LinearLayout>
-            </soup.neumorphism.NeumorphCardView>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <soup.neumorphism.NeumorphCardView
-                android:id="@+id/CardHeadPhone"
-                style="@style/neumorphismcard"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="8dp"
-                app:neumorph_shadowElevation="8dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="8dp">
-
-                    <!-- Thêm ImageView bên trong LinearLayout -->
-                    <ImageView
-                        android:id="@+id/imageHeadPhone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/result_headphones" />
-
-                    <!-- Thêm TextView bên trong LinearLayout -->
-                    <TextView
-                        android:id="@+id/textHeadPhone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="HeadPhone"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        style="@style/textStyleBold"
-                        android:layout_marginTop="8dp" />
-                </LinearLayout>
-            </soup.neumorphism.NeumorphCardView>
-
-            <soup.neumorphism.NeumorphCardView
-                android:id="@+id/CardGamming"
-                android:nextFocusRight="@+id/line1"
-                style="@style/neumorphismcard"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="8dp"
-                app:neumorph_shadowElevation="8dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="8dp">
-
-                    <ImageView
-                        android:id="@+id/imageGamming"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/result_gamepad" />
-
-                    <TextView
-                        android:id="@+id/textGamming"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Gamming"
+                        android:text="Fix"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -205,6 +132,7 @@
                 android:padding="8dp"
                 app:neumorph_shadowElevation="8dp">
                 <LinearLayout
+                    android:id="@+id/LayoutDelete"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
@@ -216,14 +144,14 @@
                         android:id="@+id/imageAccount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/result_man" />
+                        android:src="@drawable/result_delete_file" />
 
                     <!-- Thêm TextView bên trong LinearLayout -->
                     <TextView
                         android:id="@+id/textAccount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Account"
+                        android:text="Delete"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         style="@style/textStyleBold"
@@ -231,7 +159,7 @@
                 </LinearLayout>
             </soup.neumorphism.NeumorphCardView>
 
-         <soup.neumorphism.NeumorphCardView
+            <soup.neumorphism.NeumorphCardView
                 android:id="@+id/f"
                 android:nextFocusRight="@+id/line1"
                 style="@style/neumorphismcard"
@@ -241,9 +169,8 @@
                 android:padding="8dp"
                 app:neumorph_shadowElevation="10dp"
                 android:visibility="invisible">
-         </soup.neumorphism.NeumorphCardView>
+            </soup.neumorphism.NeumorphCardView>
 
         </LinearLayout>
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

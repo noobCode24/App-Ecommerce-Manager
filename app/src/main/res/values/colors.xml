@@ -5,4 +5,8 @@
     <color name="red">#E76160</color>
     <color name="grey">#ababab</color>
     <color name="delete_red">#FF3C30</color>
+    <color name="text_color">#1E4175</color>
+    <color name="background_color">#ECECEC</color>
+    <color name="highlight">#F8F8F8</color>
+    <color name="shadow_color">#A8A8A8</color>
 </resources>
