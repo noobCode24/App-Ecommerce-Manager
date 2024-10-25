@@ -2,6 +2,7 @@ package com.manager.app_ecommerce.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.manager.app_ecommerce.Activity.DetailActivity;
 import com.manager.app_ecommerce.Interface.ItemClickListener;
+import com.manager.app_ecommerce.Model.EventBus.DeleteEvent;
+import com.manager.app_ecommerce.Model.EventBus.UpdateEvent;
 import com.manager.app_ecommerce.Model.ProductModel;
 import com.manager.app_ecommerce.R;
 import com.manager.app_ecommerce.utils.Utils;
 import com.squareup.picasso.Picasso;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -24,6 +29,13 @@ import java.util.List;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder> {
     private List<ProductModel> productList;
     private Context context;
+    private boolean isDeleteActivity;
+
+    public CategoryAdapter(Context context,List<ProductModel> productList, boolean isDeleteActivity) {
+        this.productList = productList;
+        this.context = context;
+        this.isDeleteActivity = isDeleteActivity;
+    }
 
     public CategoryAdapter(Context context, List<ProductModel> productList) {
         this.productList = productList;
@@ -81,6 +93,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
                     intent.putExtra("Detail", productModel);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
+                } else {
+                    if(isDeleteActivity){
+                        EventBus.getDefault().postSticky(new DeleteEvent(productModel));
+                    } else {
+                        EventBus.getDefault().postSticky(new UpdateEvent(productModel));
+                    }
                 }
             }
         });
@@ -104,7 +122,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         return productList.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener, View.OnLongClickListener {
         TextView txt_title, txt_price, txt_rate, txt_soldquantity;
         ImageView item_image;
 
@@ -117,6 +135,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
             item_image = itemView.findViewById(R.id.item_image);
             txt_soldquantity = itemView.findViewById(R.id.txt_Soldquantity);
             itemView.setOnClickListener(this);
+            itemView.setOnCreateContextMenuListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         public void setItemClickListener(ItemClickListener itemClickListener) {
@@ -126,6 +146,21 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         @Override
         public void onClick(View v) {
             itemClickListener.onClick(v, getAdapterPosition(), false);
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            if (isDeleteActivity) {
+                menu.add(0, 0, getAdapterPosition(), "Xoá");
+            } else {
+                menu.add(1, 0, getAdapterPosition(), "Sửa");
+            }
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            itemClickListener.onClick(v, getAdapterPosition(), true);
+            return false;
         }
     }
 }

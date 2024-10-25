@@ -14,7 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.manager.app_ecommerce.R;
 
 public class WorkingWithGaming extends AppCompatActivity {
-    private LinearLayout LayoutAdd;
+    private LinearLayout LayoutAdd, LayoutDelete, LayoutFix;
     private ImageView btnBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +36,16 @@ public class WorkingWithGaming extends AppCompatActivity {
             intent.putExtra("PRODUCT_TYPE", "Gaming");
             startActivity(intent);
         });
+        LayoutDelete.setOnClickListener(v -> {
+            Intent intent = new Intent(WorkingWithGaming.this, DeleteProductActivity.class);
+            intent.putExtra("PRODUCT_TYPE", "Gaming");
+            startActivity(intent);
+        });
+        LayoutFix.setOnClickListener(v -> {
+            Intent intent = new Intent(WorkingWithGaming.this, UpdateProductActivity.class);
+            intent.putExtra("PRODUCT_TYPE", "Gaming");
+            startActivity(intent);
+        });
         btnBack.setOnClickListener(v -> {
             finish();
         });
@@ -44,5 +54,7 @@ public class WorkingWithGaming extends AppCompatActivity {
     private void initView() {
         LayoutAdd = findViewById(R.id.LayoutAdd);
         btnBack = findViewById(R.id.btnBack);
+        LayoutDelete = findViewById(R.id.LayoutDelete);
+        LayoutFix = findViewById(R.id.LayoutFix);
     }
 }

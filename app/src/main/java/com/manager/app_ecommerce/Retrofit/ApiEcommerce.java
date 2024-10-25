@@ -7,7 +7,6 @@ import com.manager.app_ecommerce.Model.getProductModel;
 
 import io.reactivex.rxjava3.core.Observable;
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -79,6 +78,12 @@ public interface ApiEcommerce {
             @Field("search") String search
     );
 
+    @POST("delete.php")
+    @FormUrlEncoded
+    Observable<MessageModel> deleteProduct(
+            @Field("product_id") int product_id
+    );
+
     @POST("insertProduct.php")
     @FormUrlEncoded
     Observable<MessageModel> insertProduct(
@@ -87,6 +92,18 @@ public interface ApiEcommerce {
             @Field("price") double price,
             @Field("quantity") int quantity,
             @Field("description") String description,
+            @Field("image") String image
+    );
+
+    @POST("updateProduct.php")
+    @FormUrlEncoded
+    Observable<MessageModel> updateProduct(
+            @Field("product_id") int product_id,
+            @Field("product_name") String product_name,
+            @Field("category_id") int category_id,
+            @Field("price") double price,
+            @Field("quantity") int quantity,
+            @Field("desc") String desc,
             @Field("image") String image
     );
 

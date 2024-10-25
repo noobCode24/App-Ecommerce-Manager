@@ -14,7 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.manager.app_ecommerce.R;
 
 public class WorkingWithPC extends AppCompatActivity {
-    private LinearLayout LayoutAdd;
+    private LinearLayout LayoutAdd, LayoutDelete, LayoutFix;
     private ImageView btnBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +36,16 @@ public class WorkingWithPC extends AppCompatActivity {
             intent.putExtra("PRODUCT_TYPE", "PC"); // Gửi loại sản phẩm
             startActivity(intent);
         });
+        LayoutDelete.setOnClickListener(v -> {
+            Intent intent = new Intent(WorkingWithPC.this, DeleteProductActivity.class);
+            intent.putExtra("PRODUCT_TYPE", "PC"); // Gửi loại sản phẩm
+            startActivity(intent);
+        });
+        LayoutFix.setOnClickListener(v -> {
+            Intent intent = new Intent(WorkingWithPC.this, UpdateProductActivity.class);
+            intent.putExtra("PRODUCT_TYPE", "PC"); // Gửi loại sản phẩm
+            startActivity(intent);
+        });
         btnBack.setOnClickListener(v -> {
             finish();
         });
@@ -44,5 +54,7 @@ public class WorkingWithPC extends AppCompatActivity {
     private void initView() {
         LayoutAdd = findViewById(R.id.LayoutAdd);
         btnBack = findViewById(R.id.btnBack);
+        LayoutDelete = findViewById(R.id.LayoutDelete);
+        LayoutFix = findViewById(R.id.LayoutFix);
     }
 }
