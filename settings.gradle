@@ -16,6 +16,8 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+//        cac neumorphism
+        maven { url "https://jitpack.io" }
     }
 }
 

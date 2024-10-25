@@ -17,4 +17,15 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="neumorphismcard">
+        <item name="neumorph_cornerFamily">rounded</item>
+        <item name="neumorph_cornerSize">20dp</item>
+        <item name="neumorph_backgroundColor">@color/background_color</item>
+
+        <!-- Thêm bóng đổ -->
+        <item name="neumorph_shadowColorLight">@drawable/shadow_gradient</item>
+        <item name="neumorph_shadowColorDark">@drawable/shadow_gradient</item>
+        <item name="neumorph_shadowElevation">8dp</item>
+    </style>
 </resources>

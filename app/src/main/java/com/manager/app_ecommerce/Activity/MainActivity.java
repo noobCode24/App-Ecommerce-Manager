@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private ApiEcommerce apiEcommerce;
     private ConstraintLayout categoryPC, categoryPhone, categoryHeadPhone, categoryGaming;
     private TextView seeAll, txt_username;
-    private LinearLayout layoutCart, layoutWishlist, layoutProfile;
+    private LinearLayout layoutCart, layoutWishlist, layoutProfile, layoutManager;
     private TextView tvNotificationCountShopping;
     private ImageView ivShopping, img_searchMain;
 
@@ -97,6 +97,11 @@ public class MainActivity extends AppCompatActivity {
             openCategoryActivity("searchAll");
         });
 
+        layoutManager.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ManagerActivity.class);
+            startActivity(intent);
+        });
+
         layoutProfile.setOnClickListener(v -> {
 //            xoa key user
             Paper.book().delete("user");
@@ -138,8 +143,8 @@ public class MainActivity extends AppCompatActivity {
     private void Anhxa() {
         rvPopularProducts = findViewById(R.id.rvAllProducts);
         // Sử dụng LinearLayoutManager cho trượt ngang
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        rvPopularProducts.setLayoutManager(layoutManager);
+        RecyclerView.LayoutManager recyclerLayoutManager  = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        rvPopularProducts.setLayoutManager(recyclerLayoutManager);
         rvPopularProducts.setHasFixedSize(true);
 
         //khoi tao list
@@ -157,6 +162,8 @@ public class MainActivity extends AppCompatActivity {
         layoutCart = findViewById(R.id.layoutCart);
         layoutWishlist = findViewById(R.id.layoutWishlist);
         layoutProfile = findViewById(R.id.layoutProfile);
+        layoutManager = findViewById(R.id.layoutManager);
+
         tvNotificationCountShopping = findViewById(R.id.tvNotificationCountShopping);
 
         //Khoi tao ImageView

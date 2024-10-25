@@ -18,8 +18,29 @@
         android:theme="@style/Theme.App_Ecommerce"
         tools:targetApi="31">
         <activity
+            android:name=".Activity.AddPoductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.WorkingWithAccount"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.WorkingWithGaming"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.WorkingWithHeadphone"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.WorkingWithPhone"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.WorkingWithPC"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.ManagerActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.SplashActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,8 +55,7 @@
             android:exported="false" />
         <activity
             android:name=".Activity.LoginActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".Activity.ResetPassActivity"
             android:exported="false" />
