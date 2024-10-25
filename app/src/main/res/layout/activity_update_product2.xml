@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.AddPoductActivity">
+    tools:context=".Activity.UpdateProduct">
+
 
     <LinearLayout
         android:id="@+id/line1"
@@ -32,7 +33,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Add New Product"
+                android:text="Update Product"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="25dp"
@@ -114,7 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
-        
+
         <ImageView
             android:id="@+id/btnCamera"
             android:src="@drawable/camera"
@@ -153,16 +154,15 @@
         app:layout_constraintTop_toBottomOf="@+id/line6" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnAdd"
+        android:id="@+id/btnUpdate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
-        android:text="Add Product"
+        android:text="Update"
         android:background="@drawable/red_btn_save_address"
         android:textColor="@color/white"
         android:textSize="18dp"
         app:layout_constraintTop_toBottomOf="@+id/txtCategory" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
