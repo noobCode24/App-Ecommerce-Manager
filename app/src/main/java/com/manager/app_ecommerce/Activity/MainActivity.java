@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,6 +23,9 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.manager.app_ecommerce.Adapter.ProductAdapter;
 import com.manager.app_ecommerce.Model.ProductModel;
 import com.manager.app_ecommerce.Model.User;
@@ -62,18 +67,42 @@ public class MainActivity extends AppCompatActivity {
 
         apiEcommerce = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiEcommerce.class);
         Paper.init(this);
-        if(Paper.book().read("user") != null){
+        if (Paper.book().read("user") != null) {
             User user = Paper.book().read("user");
             Utils.user_current = user;
         }
+        getToken();
         Anhxa();
-        if (isConnected(this)){
+        if (isConnected(this)) {
             getProducts();
             getEventClick();
             initControl();
         } else {
             Toast.makeText(getApplicationContext(), "Không có Internet, vui lòng kết nối!", Toast.LENGTH_LONG).show();
         }
+    }
+
+    //token
+    private void getToken() {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnSuccessListener(new OnSuccessListener<String>() {
+                    @Override
+                    public void onSuccess(String s) {
+                        if (!TextUtils.isEmpty(s)) {
+                            compositeDisposable.add(apiEcommerce.updateToken(String.valueOf(Utils.user_current.getUser_id()), s)
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(
+                                            messageModel -> {
+
+                                            },
+                                            throwable -> {
+                                                Log.d("log", throwable.getMessage());
+                                            }
+                                    ));
+                        }
+                    }
+                });
     }
 
     private void initControl() {
@@ -83,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        layoutWishlist.setOnClickListener(v ->{
+        layoutWishlist.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), PurchaseHistoryActivity.class);
             startActivity(intent);
         });
@@ -105,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
         layoutProfile.setOnClickListener(v -> {
 //            xoa key user
             Paper.book().delete("user");
+            FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
@@ -128,9 +158,9 @@ public class MainActivity extends AppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         getProductModel -> {
-                            if(getProductModel.isSuccess()) {
+                            if (getProductModel.isSuccess()) {
                                 productList = getProductModel.getResult();
-                                productAdapter = new ProductAdapter(getApplicationContext(),productList);
+                                productAdapter = new ProductAdapter(getApplicationContext(), productList);
                                 rvPopularProducts.setAdapter(productAdapter);
                             }
                         },
@@ -143,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
     private void Anhxa() {
         rvPopularProducts = findViewById(R.id.rvAllProducts);
         // Sử dụng LinearLayoutManager cho trượt ngang
-        RecyclerView.LayoutManager recyclerLayoutManager  = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView.LayoutManager recyclerLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rvPopularProducts.setLayoutManager(recyclerLayoutManager);
         rvPopularProducts.setHasFixedSize(true);
 
@@ -172,13 +202,13 @@ public class MainActivity extends AppCompatActivity {
 
         txt_username = findViewById(R.id.txt_username);
         //Danh sách toàn cục
-        if (Utils.ShoppingCartList == null){
+        if (Utils.ShoppingCartList == null) {
             Utils.ShoppingCartList = new ArrayList<>();
         }
     }
 
     private void getEventClick() {
-        categoryPC. setOnClickListener(v -> {
+        categoryPC.setOnClickListener(v -> {
             openCategoryActivity("PC");
         });
 
@@ -204,17 +234,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Mở categoryActivity với tham số category
-    private void openCategoryActivity(String category){
+    private void openCategoryActivity(String category) {
         Intent intent = new Intent(MainActivity.this, CategoryActivity.class);
         intent.putExtra("category", category);
         startActivity(intent);
     }
+
     // kiem tra thiet bị co kết nối với internet hay không để lay du lieu tu db
-    private boolean isConnected (Context context){
+    private boolean isConnected(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI); // them quyen
         NetworkInfo mobile = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        if (wifi != null && wifi.isConnected() ||(mobile != null && mobile.isConnected())) {
+        if (wifi != null && wifi.isConnected() || (mobile != null && mobile.isConnected())) {
             return true;
         } else {
             return false;

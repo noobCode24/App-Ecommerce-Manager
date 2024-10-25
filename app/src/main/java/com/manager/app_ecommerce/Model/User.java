@@ -6,6 +6,15 @@ public class User {
     private String pass;
     private String user_name;
     private String mobile;
+    private String uid;
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 
     public String getEmail() {
         return email;
