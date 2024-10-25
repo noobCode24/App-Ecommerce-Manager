@@ -9,11 +9,17 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.manager.app_ecommerce.R;
 import com.manager.app_ecommerce.Retrofit.ApiEcommerce;
 import com.manager.app_ecommerce.Retrofit.RetrofitClient;
@@ -28,6 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button btn_Register;
     private ApiEcommerce apiEcommerce;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private FirebaseAuth firebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,30 +78,53 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Bạn chưa nhập Username", Toast.LENGTH_SHORT).show();
         } else {
             if (str_pass.equals(str_repass)){
-                // post data
-                compositeDisposable.add(apiEcommerce.register(str_username, str_email, str_pass, str_mobile)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                            userModel -> {
-                                if (userModel.isSuccess()){
-                                    Utils.user_current.setEmail(str_email);
-                                    Utils.user_current.setPass(str_pass);
-                                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                    startActivity(intent);
-                                    finish();
+                firebaseAuth = FirebaseAuth.getInstance();
+                firebaseAuth.createUserWithEmailAndPassword(str_email, str_pass)
+                        .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()){
+                                    FirebaseUser user = firebaseAuth.getCurrentUser();
+                                    if(user != null){
+                                        postData(str_username, str_email, str_pass, str_mobile, user.getUid());
+                                    }
                                 } else {
-                                    Toast.makeText(getApplicationContext(), userModel.getMessage(), Toast.LENGTH_SHORT).show();
+                                    if (task.getException() != null) {
+                                        String errorMessage = task.getException().getMessage();
+                                        Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "Đăng ký không thành công", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            },
-                            throwable -> {
-                                Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
                             }
-                        ));
+                        });
             } else {
-
+                Toast.makeText(getApplicationContext(), "Mật khẩu không khớp", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private void postData(String str_username, String str_email, String str_pass, String str_mobile, String uid) {
+        // post data
+        compositeDisposable.add(apiEcommerce.register(str_username, str_email, str_pass, str_mobile, uid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        userModel -> {
+                            if (userModel.isSuccess()){
+                                Utils.user_current.setEmail(str_email);
+                                Utils.user_current.setPass(str_pass);
+                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(getApplicationContext(), userModel.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        },
+                        throwable -> {
+                            Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                ));
     }
 
     private void initView() {

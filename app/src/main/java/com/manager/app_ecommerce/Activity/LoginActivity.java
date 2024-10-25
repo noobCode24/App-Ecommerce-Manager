@@ -11,11 +11,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.manager.app_ecommerce.R;
 import com.manager.app_ecommerce.Retrofit.ApiEcommerce;
 import com.manager.app_ecommerce.Retrofit.RetrofitClient;
@@ -33,6 +39,8 @@ public class LoginActivity extends AppCompatActivity {
     private ApiEcommerce apiEcommerce;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private boolean isLogin = false;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +82,21 @@ public class LoginActivity extends AppCompatActivity {
                     //save
                     Paper.book().write("email", str_email);
                     Paper.book().write("pass", str_pass);
-                    Login(str_email, str_pass);
+                    if (user != null) {
+                        // user da co dang nhap fire base
+                        Login(str_email, str_pass);
+                    } else {
+                        //user da dang xuat ra
+                        firebaseAuth.signInWithEmailAndPassword(str_email, str_pass)
+                                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if(task.isSuccessful()){
+                                            Login(str_email, str_pass);
+                                        }
+                                    }
+                                });
+                    }
                 }
             }
         });
@@ -88,6 +110,8 @@ public class LoginActivity extends AppCompatActivity {
         txt_pass = findViewById(R.id.txt_pass);
         btn_Login = findViewById(R.id.btn_Login);
         txt_forgotpass = findViewById(R.id.txt_forgotpass);
+        firebaseAuth = FirebaseAuth.getInstance();
+        user = firebaseAuth.getCurrentUser();
 
         //read data
         if(Paper.book().read("email") != null && Paper.book().read("pass") != null) {
@@ -108,6 +132,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void Login(String email, String pass) {
+
         compositeDisposable.add(apiEcommerce.login(email, pass)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
