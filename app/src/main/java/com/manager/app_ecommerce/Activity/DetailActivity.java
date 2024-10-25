@@ -207,8 +207,12 @@ public class DetailActivity extends AppCompatActivity {
             // Nếu có ảnh trong drawable, hiển thị nó
             img_pic.setImageResource(imageResourceId);
         } else {
-            // Nếu không, lấy ảnh từ internet bằng Picasso
-            Picasso.get().load(productModel.getImage()).into(img_pic);
+            if(productModel.getImage().contains("http")){
+                Picasso.get().load(productModel.getImage()).into(img_pic);
+            } else {
+                String img = Utils.BASE_URL+"images/" + productModel.getImage();
+                Picasso.get().load(img).into(img_pic);
+            }
         }
     }
 
