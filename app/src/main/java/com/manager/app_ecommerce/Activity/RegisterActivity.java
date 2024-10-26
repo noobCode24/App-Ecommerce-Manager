@@ -35,6 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
     private ApiEcommerce apiEcommerce;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private FirebaseAuth firebaseAuth;
+    private FirebaseUser user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +85,6 @@ public class RegisterActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()){
-                                    FirebaseUser user = firebaseAuth.getCurrentUser();
                                     if(user != null){
                                         postData(str_username, str_email, str_pass, str_mobile, user.getUid());
                                     }
@@ -135,6 +135,8 @@ public class RegisterActivity extends AppCompatActivity {
         txt_mobile = findViewById(R.id.txt_moblie);
         txt_username = findViewById(R.id.txt_username);
         btn_Register = findViewById(R.id.btn_register);
+        firebaseAuth = FirebaseAuth.getInstance();
+        user = firebaseAuth.getCurrentUser();
     }
 
     @Override

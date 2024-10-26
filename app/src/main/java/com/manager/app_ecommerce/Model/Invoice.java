@@ -8,7 +8,15 @@ public class Invoice {
     private String address;
     private String mobile;
     private double total_amount;
+    private int status;
     private List<Item> item;
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public int getId() {
         return id;

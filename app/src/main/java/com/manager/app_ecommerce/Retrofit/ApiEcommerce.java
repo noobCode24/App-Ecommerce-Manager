@@ -93,6 +93,13 @@ public interface ApiEcommerce {
             @Field("product_id") int product_id
     );
 
+    @POST("updateInvoice.php")
+    @FormUrlEncoded
+    Observable<MessageModel> updateOrder(
+            @Field("id") int id,
+            @Field("status") int status
+    );
+
     @POST("insertProduct.php")
     @FormUrlEncoded
     Observable<MessageModel> insertProduct(

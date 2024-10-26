@@ -134,9 +134,9 @@ public class MainActivity extends AppCompatActivity {
         layoutProfile.setOnClickListener(v -> {
 //            xoa key user
             Paper.book().delete("user");
-            FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
+            FirebaseAuth.getInstance().signOut();
             finish();
         });
     }
