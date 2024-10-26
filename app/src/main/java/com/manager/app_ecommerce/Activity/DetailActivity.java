@@ -101,7 +101,12 @@ public class DetailActivity extends AppCompatActivity {
                 if (imageResourceId != 0) {
                     img_dialog.setImageResource(imageResourceId);
                 } else {
-                    Picasso.get().load(productModel.getImage()).into(img_dialog);
+                    if(productModel.getImage().contains("http")){
+                        Picasso.get().load(productModel.getImage()).into(img_dialog);
+                    } else {
+                        String img = Utils.BASE_URL+"images/" + productModel.getImage();
+                        Picasso.get().load(img).into(img_dialog);
+                    }
                 }
 
                 // Thêm sự kiện cho nút thoát
