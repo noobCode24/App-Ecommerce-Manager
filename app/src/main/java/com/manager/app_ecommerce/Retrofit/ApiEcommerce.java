@@ -2,6 +2,7 @@ package com.manager.app_ecommerce.Retrofit;
 
 import com.manager.app_ecommerce.Model.InvoiceModel;
 import com.manager.app_ecommerce.Model.MessageModel;
+import com.manager.app_ecommerce.Model.StatisticalModel;
 import com.manager.app_ecommerce.Model.UserModel;
 import com.manager.app_ecommerce.Model.getProductModel;
 
@@ -49,6 +50,10 @@ public interface ApiEcommerce {
             @Field("email") String email,
             @Field("pass") String pass
     );
+
+    @GET("Statistical.php")
+    Observable<StatisticalModel> Statistical();
+
 
     @POST("sendEmail.php")
     @FormUrlEncoded

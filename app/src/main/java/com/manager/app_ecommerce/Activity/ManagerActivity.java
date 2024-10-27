@@ -15,7 +15,7 @@ import com.manager.app_ecommerce.R;
 import soup.neumorphism.NeumorphCardView;
 
 public class ManagerActivity extends AppCompatActivity {
-    private NeumorphCardView cardPC, cardPhone, cardHeadPhone, cardGamming, cardAccount;
+    private NeumorphCardView cardPC, cardPhone, cardHeadPhone, cardGamming, cardAccount, btn_Statistical;
     private ImageView btnBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +60,10 @@ public class ManagerActivity extends AppCompatActivity {
         btnBack.setOnClickListener(v -> {
             finish();
         });
+        btn_Statistical.setOnClickListener(v -> {
+            Intent intent = new Intent(ManagerActivity.this, StatisticalActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void initView() {
@@ -69,5 +73,6 @@ public class ManagerActivity extends AppCompatActivity {
         cardGamming = findViewById(R.id.CardGamming);
         cardAccount = findViewById(R.id.CardAccount);
         btnBack = findViewById(R.id.btnBack);
+        btn_Statistical = findViewById(R.id.btn_Statistical);
     }
 }
