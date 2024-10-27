@@ -69,7 +69,7 @@ public class StatisticalActivity extends AppCompatActivity {
                                Log.e("PieChart", "No entries to display");
                            }
 
-                           PieDataSet pieDataSet = new PieDataSet(list, "Statistical");
+                           PieDataSet pieDataSet = new PieDataSet(list, "Thống kê");
                            PieData data = new PieData();
                            data.setDataSet(pieDataSet);
                            data.setValueTextSize(12f);

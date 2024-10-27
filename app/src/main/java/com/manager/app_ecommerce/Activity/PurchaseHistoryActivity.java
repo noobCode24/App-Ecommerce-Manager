@@ -157,7 +157,7 @@ public class PurchaseHistoryActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    @Subscribe(sticky = false, threadMode = ThreadMode.MAIN)
     public void eventInvoice(InviceEvent event){
         if (event != null ){
             invoice = event.getInvoice();

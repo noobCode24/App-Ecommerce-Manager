@@ -1,6 +1,9 @@
 package com.manager.app_ecommerce.Adapter;
 
 import android.content.Context;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +44,17 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Invoice invoice = listInvoice.get(position);
-        holder.idInvoice.setText("Đơn hàng: " + invoice.getId());
+        holder.idInvoice.setText("Mã đơn hàng:# " + invoice.getId());
+        String addressText = "Địa chỉ: " + invoice.getAddress();
+        SpannableString spannableAddress = new SpannableString(addressText);
+        spannableAddress.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.black)),
+                8, addressText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        holder.address_invoice.setText(spannableAddress);
+        String usernameText = "Người đặt: " + invoice.getUser_name();
+        SpannableString spannableUsername = new SpannableString(usernameText);
+        spannableUsername.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.black)),
+                11, usernameText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        holder.username_invoice.setText(spannableUsername);
         holder.idStatusInvoice.setText(statusInvoice(invoice.getStatus()));
         LinearLayoutManager layoutManager = new LinearLayoutManager(
                 holder.recyclerview_Detail.getContext(),
@@ -91,7 +104,7 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.MyViewHo
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
-        TextView idInvoice, idStatusInvoice;
+        TextView idInvoice, idStatusInvoice, address_invoice, username_invoice;
         RecyclerView recyclerview_Detail;
         ItemClickListener listener;
         public MyViewHolder(@NonNull View itemView) {
@@ -99,6 +112,8 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.MyViewHo
             idInvoice = itemView.findViewById(R.id.idInvoice);
             recyclerview_Detail = itemView.findViewById(R.id.recyclerview_Detail);
             idStatusInvoice = itemView.findViewById(R.id.idStatus);
+            address_invoice = itemView.findViewById(R.id.address_invoice);
+            username_invoice = itemView.findViewById(R.id.username_invoice);
             itemView.setOnLongClickListener(this);
         }
 
