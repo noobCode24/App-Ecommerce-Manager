@@ -16,6 +16,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.manager.app_ecommerce.R;
 import com.manager.app_ecommerce.Retrofit.ApiEcommerce;
 import com.manager.app_ecommerce.Retrofit.RetrofitClient;
@@ -53,36 +54,17 @@ public class ResetPassActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String str_email = email.getText().toString().trim();
                 if(TextUtils.isEmpty(str_email)) {
-                    Toast.makeText(getApplicationContext(), "Ban da nhap mail", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Bạn chưa nhập email", Toast.LENGTH_SHORT).show();
                 }else {
                     progressBar.setVisibility(View.VISIBLE);
-                    compositeDisposable.add(apiEcommerce.resetPass(str_email)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
-                                    userModel -> {
-                                        Log.d("API_RESPONSE", userModel.getMessage());
-                                        if(userModel.isSuccess()){
-                                            Toast.makeText(getApplicationContext(), userModel.getMessage(), Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(ResetPassActivity.this, LoginActivity.class);
-                                            startActivity(intent);
-                                            finish();
-                                        } else {
-                                            Toast.makeText(getApplicationContext(), userModel.getMessage(), Toast.LENGTH_SHORT).show();
-                                        }
-                                        progressBar.setVisibility(View.INVISIBLE);
-                                    },
-                                    throwable -> {
-                                        // Kiểm tra lỗi timeout
-                                        if (throwable instanceof java.net.SocketTimeoutException) {
-                                            Toast.makeText(getApplicationContext(), "Lỗi kết nối: Timeout", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            Toast.makeText(getApplicationContext(), "Lỗi: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                                        }
-                                        progressBar.setVisibility(View.INVISIBLE);
-                                    }
-                            )
-                    );
+                    //reset pass tren firebase
+                    FirebaseAuth.getInstance().sendPasswordResetEmail(str_email)
+                            .addOnCompleteListener(task -> {
+                                if(task. isSuccessful()){
+                                    Toast.makeText(getApplicationContext(), "Vui lòng kiểm tra email để reset pass", Toast.LENGTH_SHORT).show();
+                                }
+                                finish();
+                            });
                 }
             }
         });

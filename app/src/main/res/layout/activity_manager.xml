@@ -232,15 +232,39 @@
             </soup.neumorphism.NeumorphCardView>
 
          <soup.neumorphism.NeumorphCardView
-                android:id="@+id/f"
-                android:nextFocusRight="@+id/line1"
-                style="@style/neumorphismcard"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="8dp"
-                app:neumorph_shadowElevation="10dp"
-                android:visibility="invisible">
+             android:id="@+id/btn_Statistical"
+             android:nextFocusRight="@+id/line1"
+             style="@style/neumorphismcard"
+             android:layout_weight="1"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:padding="8dp"
+             app:neumorph_shadowElevation="8dp">
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:orientation="vertical"
+                 android:gravity="center"
+                 android:padding="8dp">
+
+                 <!-- Thêm ImageView bên trong LinearLayout -->
+                 <ImageView
+                     android:id="@+id/imageStatistical"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:src="@drawable/result_analytics" />
+
+                 <!-- Thêm TextView bên trong LinearLayout -->
+                 <TextView
+                     android:id="@+id/textStatistical"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="Statistical"
+                     android:textColor="@color/black"
+                     android:textSize="16sp"
+                     style="@style/textStyleBold"
+                     android:layout_marginTop="8dp" />
+             </LinearLayout>
          </soup.neumorphism.NeumorphCardView>
 
         </LinearLayout>

@@ -83,10 +83,11 @@ public class LoginActivity extends AppCompatActivity {
                     Paper.book().write("email", str_email);
                     Paper.book().write("pass", str_pass);
                     if (user != null) {
-                        // user da co dang nhap fire base
+                        // user da co dang nhap fire base chưa sigout
                         Login(str_email, str_pass);
                     } else {
                         //user da dang xuat ra
+                        // co 2 noi quan ly mk la firebase, 2 la hosting
                         firebaseAuth.signInWithEmailAndPassword(str_email, str_pass)
                                 .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                                     @Override
@@ -132,7 +133,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void Login(String email, String pass) {
-
         compositeDisposable.add(apiEcommerce.login(email, pass)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
