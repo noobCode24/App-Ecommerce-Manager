@@ -266,8 +266,8 @@
                      android:layout_marginTop="8dp" />
              </LinearLayout>
          </soup.neumorphism.NeumorphCardView>
-
         </LinearLayout>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

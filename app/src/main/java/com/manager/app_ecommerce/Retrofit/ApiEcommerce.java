@@ -54,6 +54,8 @@ public interface ApiEcommerce {
     @GET("Statistical.php")
     Observable<StatisticalModel> Statistical();
 
+    @GET("monthlyStatistics.php")
+    Observable<StatisticalModel> monthlyStatistics();
 
     @POST("sendEmail.php")
     @FormUrlEncoded

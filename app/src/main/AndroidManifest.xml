@@ -18,6 +18,12 @@
         android:theme="@style/Theme.App_Ecommerce"
         tools:targetApi="31">
         <activity
+            android:name=".Activity.MonthlyStatisticsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.StatisticalMasterActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.StatisticalActivity"
             android:exported="false" />
         <activity

@@ -61,7 +61,7 @@ public class ManagerActivity extends AppCompatActivity {
             finish();
         });
         btn_Statistical.setOnClickListener(v -> {
-            Intent intent = new Intent(ManagerActivity.this, StatisticalActivity.class);
+            Intent intent = new Intent(ManagerActivity.this, StatisticalMasterActivity.class);
             startActivity(intent);
         });
     }
